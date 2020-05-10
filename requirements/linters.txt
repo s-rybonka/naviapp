@@ -1,0 +1,8 @@
+# Linters
+# ------------------------------------------------------------------------------
+flake8==3.7.9  # https://github.com/PyCQA/flake8
+
+pylint==2.4.4  # https://github.com/PyCQA/pylint
+pylint-plugin-utils==0.6  # https://github.com/PyCQA/pylint-plugin-utils
+pylint-django==2.0.13  # https://github.com/PyCQA/pylint-django
+
