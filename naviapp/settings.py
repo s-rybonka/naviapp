@@ -7,6 +7,7 @@ from corsheaders.defaults import default_headers
 
 ROOT_DIR = environ.Path(__file__) - 2
 
+
 # Environment
 # https://django-environ.readthedocs.io/en/latest/#how-to-use
 # ------------------------------------------------------------------------------
@@ -32,9 +33,6 @@ env = environ.Env(
     DJANGO_SERVER_EMAIL=(str, 'root@localhost.com'),
     # Debug
     DJANGO_USE_DEBUG_TOOLBAR=(bool, False),
-    DJANGO_TEST_RUN=(bool, False),
-    DJANGO_DEBUG_SQL=(bool, False),
-    DJANGO_DEBUG_SQL_COLOR=(bool, False),
     # Custom
     DJANGO_FRONTEND_PASSWORD_RESET_URL=(str, 'http://naviapp.com'),
     # Third party API

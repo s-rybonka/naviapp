@@ -5,7 +5,6 @@ from allauth.utils import email_address_exists
 from django.conf import settings
 from django.utils.translation import gettext as _
 from rest_auth.models import TokenModel
-from rest_auth.registration.serializers import SocialLoginSerializer
 from rest_auth.serializers import LoginSerializer as RestAuthLoginSerializer
 from rest_auth.serializers import PasswordResetSerializer as BasePasswordResetSerializer
 from rest_auth.serializers import TokenSerializer as BaseTokenSerializer
@@ -111,7 +110,3 @@ class PasswordResetSerializer(BasePasswordResetSerializer):
                 "password_reset_url": settings.DJANGO_FRONTEND_PASSWORD_RESET_URL
             }
         }
-
-
-class UserSocialLoginSerializer(SocialLoginSerializer):
-    code = None

@@ -14,3 +14,10 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['username']
 
     objects = UserManager()
+
+    class Meta:
+        verbose_name = _('user')
+        verbose_name_plural = _('users')
+
+    def __str__(self):
+        return f'User:{self.email}'

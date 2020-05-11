@@ -15,7 +15,6 @@ class EmailAddressInline(admin.TabularInline):
 
 @admin.register(User)
 class UserAdmin(auth_admin.UserAdmin):
-    change_form_template = "admin/user_change_form.html"
     form = UserChangeForm
     add_form = UserCreationForm
 
@@ -43,7 +42,6 @@ class UserAdmin(auth_admin.UserAdmin):
     list_display_links = ('email',)
     search_fields = ('first_name', 'last_name', 'email')
     ordering = ('-date_joined',)
-    actions = ['verify']
 
     inlines = [EmailAddressInline]
 

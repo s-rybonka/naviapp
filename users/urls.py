@@ -73,9 +73,9 @@ pwd_change_swg_auto_schema = swagger_auto_schema(
 )
 
 register_urls = [
+    path("", register_swg_auto_schema(RegisterView.as_view()), name="register"),
     path("resend-email/", users_views.ResendVerificationEmailView.as_view(), name="resend-email"),
     path("verify-email/", users_views.VerifyEmailView.as_view(), name="verify-email"),
-    path("", register_swg_auto_schema(RegisterView.as_view()), name="register"),
 ]
 
 auth_urls = [
