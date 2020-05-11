@@ -4,6 +4,8 @@ from django.utils.translation import gettext_lazy as _
 from model_utils import Choices
 from model_utils.fields import StatusField
 from model_utils.models import TimeStampedModel
+from django.contrib.contenttypes.fields import GenericRelation
+from common.models import BaseGenericAbstractModel
 
 
 class Post(TimeStampedModel):
@@ -21,6 +23,7 @@ class Post(TimeStampedModel):
         verbose_name=_('author'), related_name='posts',
     )
     content = models.TextField(verbose_name=_('content'))
+    
 
     class Meta:
         verbose_name = _('post')
@@ -29,3 +32,13 @@ class Post(TimeStampedModel):
 
     def __str__(self):
         return f'Post:{self.title}'
+
+
+class Like(BaseGenericAbstractModel):
+    class Meta:
+        verbose_name = _('like')
+        verbose_name_plural = _('likes')
+        ordering = ('-id',)
+
+    def __str__(self):
+        return f'Liked by:{self.added_by}'
