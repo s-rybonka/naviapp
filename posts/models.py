@@ -1,10 +1,11 @@
 from django.conf import settings
+from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from model_utils import Choices
 from model_utils.fields import StatusField
 from model_utils.models import TimeStampedModel
-from django.contrib.contenttypes.fields import GenericRelation
+
 from common.models import BaseGenericAbstractModel
 
 
@@ -23,7 +24,10 @@ class Post(TimeStampedModel):
         verbose_name=_('author'), related_name='posts',
     )
     content = models.TextField(verbose_name=_('content'))
-    
+    likes = GenericRelation(
+        'Like', related_query_name='post',
+        verbose_name=_('likes'),
+    )
 
     class Meta:
         verbose_name = _('post')

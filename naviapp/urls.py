@@ -27,6 +27,7 @@ urlpatterns = [
     # API urls
     path('api/v1/', include(([
     path('', include(('users.urls', 'users'))),
+    path('', include(('posts.urls', 'posts'))),
     path('docs/', schema_view.with_ui(), name='docs'),
     ], 'api'), namespace='api')),
 ]
