@@ -110,7 +110,6 @@ THIRD_PARTY_APPS = (
     'drf_yasg',
     'allauth',
     'allauth.account',
-    'allauth.socialaccount',
     'corsheaders',
     'rest_auth',
     'rest_auth.registration',

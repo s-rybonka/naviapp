@@ -20,7 +20,7 @@ class UserFactory(DjangoModelFactory):
         django_get_or_create = ('email',)
 
     @post_generation
-    def populate_email(self, create, **kwargs):
+    def populate_email(self, create, extracted, **kwargs):
         if not create:
             return
 
