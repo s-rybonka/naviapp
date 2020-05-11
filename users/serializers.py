@@ -90,7 +90,7 @@ class EmailVerificationSerializer(serializers.Serializer):
 class UserShortSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("id", "email", "username", "profile_avatar")
+        fields = ("id", "email", "username")
         read_only_fields = fields
 
 

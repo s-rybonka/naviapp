@@ -35,6 +35,8 @@ env = environ.Env(
     DJANGO_TEST_RUN=(bool, False),
     DJANGO_DEBUG_SQL=(bool, False),
     DJANGO_DEBUG_SQL_COLOR=(bool, False),
+    # Custom
+    DJANGO_FRONTEND_PASSWORD_RESET_URL=(str, 'http://naviapp.com'),
     # Third party API
     # Cors
     DJANGO_CORS_ORIGIN_WHITELIST=(list, []),
@@ -43,9 +45,9 @@ env = environ.Env(
     # ImageKit
     DJANGO_IMAGEKIT_DEFAULT_FILE_STORAGE=(str, ''),
     # Api docs
-    API_DOC_SCHEMA_TITLE=(str, 'CureRate Rest API'),
+    API_DOC_SCHEMA_TITLE=(str, 'NaviApp Rest API'),
     API_DOC_SCHEMA_DESCRIPTION=(str, 'Based on OpenAPI 2.0 Specification'),
-    API_DOC_SCHEMA_AUTHOR_EMAIL=(str, 'developer@curerate.com'),
+    API_DOC_SCHEMA_AUTHOR_EMAIL=(str, 'developer@naviapp.com'),
 )
 
 # Django Core
@@ -108,6 +110,7 @@ THIRD_PARTY_APPS = (
     'drf_yasg',
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
     'corsheaders',
     'rest_auth',
     'rest_auth.registration',
@@ -340,6 +343,7 @@ IMAGEKIT_CACHEFILE_DIR = ''
 
 # Custom settings
 # ------------------------------------------------------------------------------
+DJANGO_FRONTEND_PASSWORD_RESET_URL = env('DJANGO_FRONTEND_PASSWORD_RESET_URL')
 
 # Drf-yasg settings
 # https://drf-yasg.readthedocs.io/en/stable/settings.html#swagger-settings

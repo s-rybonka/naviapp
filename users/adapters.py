@@ -10,7 +10,7 @@ class AccountAdapter(DefaultAccountAdapter):
 
     def get_email_confirmation_url(self, request, emailconfirmation):
         args = f"key={emailconfirmation.key}"
-        return f"custom.domain.com{args}"
+        return f"{settings.DJANGO_FRONTEND_PASSWORD_RESET_URL}{args}"
 
     def respond_email_verification_sent(self, request, user):
         return HttpResponseRedirect('/')
