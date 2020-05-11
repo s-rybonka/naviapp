@@ -8,6 +8,8 @@ class PostModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = posts_models.Post
         fields = ('author', 'title', 'content', 'created', 'modified')
+        SWAGGER_REF_MODEL_NAME = 'PostObject'
+        ref_name = SWAGGER_REF_MODEL_NAME
 
     def to_representation(self, instance):
         post = super().to_representation(instance)
