@@ -1,3 +1,7 @@
+import os
+import uuid
+
+from django.utils import timezone
 from drf_yasg import openapi
 from rest_framework.exceptions import NotFound
 from rest_framework.views import APIView
@@ -45,3 +49,13 @@ class NotFoundAPIHandler(APIView):
 
 
 drf_handler404 = NotFoundAPIHandler.as_view()
+
+
+def get_file_upload_path(instance, filename):
+    _, ext = os.path.splitext(filename)
+
+    return '{0}/{1}/{2}{3}'.format(
+        instance.upload_prefix,
+        timezone.now().strftime('%y/%m'),
+        uuid.uuid4().hex,
+        ext.lower())

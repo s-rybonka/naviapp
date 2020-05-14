@@ -9,6 +9,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework_tracking.mixins import LoggingMixin
 
 from common.serializers import OperationSerializer
+from common.serializers import PaginatedListSerializer
 from common.utils import get_default_schema_responses
 from posts import models as posts_models
 from posts import serializers as posts_serializers
@@ -19,7 +20,9 @@ from posts.filters import LikeFilter
     name='list',
     decorator=swagger_auto_schema(
         responses=get_default_schema_responses({
-            '200': posts_serializers.PostModelSerializer,
+            '200': PaginatedListSerializer(
+                result_serializer=posts_serializers.PostModelSerializer,
+            ),
         }, exclude=['400', '401', '403']),
     )
 )
@@ -28,7 +31,7 @@ from posts.filters import LikeFilter
     decorator=swagger_auto_schema(
         request_body=posts_serializers.PostModelSerializer,
         responses=get_default_schema_responses({
-            '200': posts_serializers.PostModelSerializer,
+            '201': posts_serializers.PostModelSerializer,
         }),
     )
 )
@@ -62,12 +65,12 @@ from posts.filters import LikeFilter
     name='destroy',
     decorator=swagger_auto_schema(
         responses=get_default_schema_responses({
-            '200': OperationSerializer,
+            '204': OperationSerializer,
         }),
     )
 )
 class PostGenericViewSet(LoggingMixin, ModelViewSet):
-    queryset = posts_models.Post.objects.all()
+    queryset = posts_models.Post.objects.published()
     serializer_class = posts_serializers.PostModelSerializer
 
 
@@ -75,7 +78,7 @@ class PostGenericViewSet(LoggingMixin, ModelViewSet):
     name='create',
     decorator=swagger_auto_schema(
         responses=get_default_schema_responses({
-            '200': posts_serializers.LikeModelSerializer,
+            '201': posts_serializers.LikeModelSerializer,
         }),
     )
 )
@@ -83,7 +86,7 @@ class PostGenericViewSet(LoggingMixin, ModelViewSet):
     name='destroy',
     decorator=swagger_auto_schema(
         responses=get_default_schema_responses({
-            '200': OperationSerializer,
+            '204': OperationSerializer,
         }, exclude=['400']),
     )
 )
@@ -102,7 +105,7 @@ class LikeGenericViewSet(
     GenericViewSet,
 ):
     serializer_class = posts_serializers.LikeModelSerializer
-    queryset = posts_models.Like.objects.post_likes()
+    queryset = posts_models.Like.objects.all()
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = LikeFilter
     pagination_class = None

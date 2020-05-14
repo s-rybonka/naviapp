@@ -6,11 +6,16 @@ from posts import models as posts_models
 
 
 class LikeQueryset(QuerySet):
-    def post_likes(self):
-        return self.filter(content_type=posts_models.Post.get_content_type())
-
     def group_by_date(self):
         return (self.annotate(date=dj_db_functions.TruncDay('created'))
                 .values('date')
                 .order_by('-date')
                 .annotate(likes_count=Count('id')))
+
+
+class PostQueryset(QuerySet):
+    def published(self):
+        return self.filter(status=posts_models.Post.STATUSES.published)
+
+    def archived(self):
+        return self.filter(status=posts_models.Post.STATUSES.archived)

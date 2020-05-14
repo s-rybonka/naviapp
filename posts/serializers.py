@@ -8,7 +8,7 @@ from users.serializers import UserShortSerializer
 class PostModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = posts_models.Post
-        fields = ('id', 'author', 'title', 'content', 'created', 'modified')
+        fields = ('id', 'author', 'title', 'file', 'content', 'created', 'modified')
         SWAGGER_REF_MODEL_NAME = 'PostObject'
         ref_name = SWAGGER_REF_MODEL_NAME
 
@@ -32,7 +32,7 @@ class LikeModelSerializer(serializers.ModelSerializer):
 
 
 class LikeGroupByDateSerializer(serializers.Serializer):
-    date = serializers.DateTimeField(format='%Y-%m-%d', read_only=True, label=_('date'))
+    date = serializers.DateTimeField(read_only=True, label=_('date'))
     likes_count = serializers.IntegerField(read_only=True, label=_('likes count'))
 
     class Meta:

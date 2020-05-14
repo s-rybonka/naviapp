@@ -13,7 +13,7 @@ from users.tests.factories import UserFactory
 
 pytestmark = pytest.mark.django_db
 
-
+@pytest.mark.django_db
 class TestRegistrationAPIViewSet:
     registration_url = reverse("api:users:auth:register")
     email_verification_url = reverse("api:users:auth:verify-email")

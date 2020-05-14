@@ -95,5 +95,5 @@ auth_urls = [
 
 urlpatterns = [
     path("auth/", include((auth_urls, "auth"))),
-    path("profile/", users_views.UserRetrieveAPIView.as_view(), name='profile-detail')
+    path("profile-detail/", users_views.UserRetrieveAPIView.as_view(), name='profile-detail')
 ]

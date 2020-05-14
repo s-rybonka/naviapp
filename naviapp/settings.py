@@ -332,8 +332,8 @@ CORS_ALLOW_HEADERS = default_headers + env.tuple('DJANGO_CORS_ALLOW_HEADERS')
 # Imagekit settings
 # https://github.com/matthewwithanm/django-imagekit
 # ------------------------------------------------------------------------------
-DEFAULT_IMAGE_THUMB_SIZE = (800, 800)
-DEFAULT_IMAGE_THUMB_QUALITY = 80
+DEFAULT_IMAGE_SIZE = (800, 800)
+DEFAULT_IMAGE_QUALITY = 80
 DEFAULT_IMAGE_EXTENSION = "JPEG"
 IMAGEKIT_DEFAULT_FILE_STORAGE = env('DJANGO_IMAGEKIT_DEFAULT_FILE_STORAGE')
 IMAGEKIT_CACHEFILE_DIR = ''

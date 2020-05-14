@@ -5,7 +5,7 @@ from posts.models import Like
 
 class LikeFilter(filters.FilterSet):
     date_from = filters.DateFilter(field_name='created', lookup_expr='gte')
-    date_to = filters.DateFilter(field_name='created', lookup_expr='lte')
+    date_to = filters.IsoDateTimeFilter(field_name='created', lookup_expr='lte')
 
     class Meta:
         model = Like

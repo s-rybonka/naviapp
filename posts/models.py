@@ -3,15 +3,20 @@ from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from imagekit.models import ProcessedImageField
 from model_utils import Choices
 from model_utils.fields import StatusField
 from model_utils.models import TimeStampedModel
+from pilkit.processors import Anchor
+from pilkit.processors import ResizeToFit
 
+from common.models import BaseFileCleanableModel
 from common.models import BaseGenericAbstractModel
-from posts.managers import LikeQueryset
+from common.utils import get_file_upload_path
+from posts import managers as posts_managers
 
 
-class Post(TimeStampedModel):
+class Post(BaseFileCleanableModel):
     STATUSES = Choices(
         ('published', _('Published')),
         ('archived', _('Archived')),
@@ -20,6 +25,14 @@ class Post(TimeStampedModel):
     status = StatusField(
         verbose_name=_('status'), choices_name='STATUSES',
         db_index=True,
+    )
+    file = ProcessedImageField(
+        upload_to=get_file_upload_path,
+        processors=[ResizeToFit(*settings.DEFAULT_IMAGE_SIZE, anchor=Anchor.CENTER, upscale=False)],
+        format=settings.DEFAULT_IMAGE_EXTENSION,
+        options={'quality': settings.DEFAULT_IMAGE_QUALITY},
+        verbose_name=_('image file'),
+        null=True, blank=True,
     )
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
@@ -30,6 +43,7 @@ class Post(TimeStampedModel):
         'Like', related_query_name='post',
         verbose_name=_('likes'),
     )
+    objects = posts_managers.PostQueryset.as_manager()
 
     class Meta:
         verbose_name = _('post')
@@ -39,16 +53,9 @@ class Post(TimeStampedModel):
     def __str__(self):
         return f'Post: {self.title}'
 
-    @classmethod
-    def get_content_type(cls):
-        return ContentType.objects.get(
-            app_label='posts',
-            model=cls.__name__.lower(),
-        )
-
 
 class Like(BaseGenericAbstractModel):
-    objects = LikeQueryset.as_manager()
+    objects = posts_managers.LikeQueryset.as_manager()
 
     class Meta:
         verbose_name = _('like')
