@@ -32,6 +32,18 @@ class LikeModelSerializer(serializers.ModelSerializer):
         SWAGGER_REF_MODEL_NAME = 'LikeObject'
         ref_name = SWAGGER_REF_MODEL_NAME
 
+    def validate(self, attrs):
+        request = self.context.get('request')
+        content_object = attrs.get('content_object')
+        like_qs = posts_models.Like.objects.filter(
+            added_by=request.user, object_id=content_object.id,
+        )
+        if like_qs.exists():
+            raise serializers.ValidationError({
+                'content_object': _('Post already liked.')
+            })
+        return attrs
+
 
 class LikeGroupByDateSerializer(serializers.Serializer):
     date = serializers.DateTimeField(read_only=True, label=_('date'))

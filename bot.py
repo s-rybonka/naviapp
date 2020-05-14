@@ -94,7 +94,10 @@ class NaviBotService:
         likes_list = []
 
         for user in users:
-            for post in random.choices(posts, k=max_likes_per_user):
+            likes_counter = 0
+            for post in random.choices(posts, k=len(posts) // 2):
+                if likes_counter == max_likes_per_user:
+                    break
                 data = {
                     'content_object': post.get('id'),
                 }
@@ -102,6 +105,7 @@ class NaviBotService:
                     like_create_url, data=data,
                     headers=self.format_auth_headers(user.get('auth_token')),
                 )
+                likes_counter += 1
 
                 if response.status_code == requests.codes.created:
                     data = response.json()
@@ -163,7 +167,7 @@ class NaviBotService:
         self.get_statistic()
         self.clean_up()
         bot_stopped = timer()
-        sys.stdout.write(f'Jobs completed. Execution time: {round(bot_started - bot_stopped, 3)} sec.\n')
+        sys.stdout.write(f'Jobs completed. Execution time: {abs(round(bot_started - bot_stopped, 3))} sec.\n')
 
 
 if __name__ == '__main__':

@@ -2,6 +2,6 @@ api_base_url: 'http://127.0.0.1:8000'
 api_auth_register_url: '/api/v1/auth/register/'
 api_posts_create_url: '/api/v1/posts/'
 api_likes_create_url: '/api/v1/likes/'
-number_of_users: 2
-max_posts_per_user: 10
-max_likes_per_user: 5
+number_of_users: 5
+max_posts_per_user: 3
+max_likes_per_user: 2
