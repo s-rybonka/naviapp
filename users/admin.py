@@ -23,7 +23,7 @@ class UserAdmin(auth_admin.UserAdmin):
         (_('Personal info'), {'fields': ('first_name', 'last_name',)}),
         (_('Permissions'), {
             'classes': ('collapse',),
-            'fields': ('is_active', 'is_staff', 'is_superuser', 'is_verified', 'groups', 'user_permissions'),
+            'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions'),
         }),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
     )
@@ -37,7 +37,7 @@ class UserAdmin(auth_admin.UserAdmin):
 
     list_display = (
         'id', 'email', 'username', 'first_name', 'last_name', 'is_superuser', 'is_staff', 'date_joined', 'last_login',
-        'is_verified', 'is_email_verified'
+        'is_email_verified'
     )
     list_display_links = ('email',)
     search_fields = ('first_name', 'last_name', 'email')
@@ -58,4 +58,4 @@ class UserAdmin(auth_admin.UserAdmin):
         return user.auth_token.key
 
     def get_list_filter(self, request):
-        return super().get_list_filter(request) + ('is_verified',)
+        return super().get_list_filter(request)

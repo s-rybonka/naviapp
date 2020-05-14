@@ -73,6 +73,9 @@ class PostGenericViewSet(LoggingMixin, ModelViewSet):
     queryset = posts_models.Post.objects.published()
     serializer_class = posts_serializers.PostModelSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
 
 @method_decorator(
     name='create',
@@ -110,6 +113,9 @@ class LikeGenericViewSet(
     filterset_class = LikeFilter
     pagination_class = None
     analytic_serializer = posts_serializers.LikeGroupByDateSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(added_by=self.request.user)
 
     @action(detail=False)
     def analytics(self, request):
