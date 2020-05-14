@@ -6,6 +6,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.viewsets import ModelViewSet
+from rest_framework_tracking.mixins import LoggingMixin
 
 from common.serializers import OperationSerializer
 from common.utils import get_default_schema_responses
@@ -65,7 +66,7 @@ from posts.filters import LikeFilter
         }),
     )
 )
-class PostGenericViewSet(ModelViewSet):
+class PostGenericViewSet(LoggingMixin, ModelViewSet):
     queryset = posts_models.Post.objects.all()
     serializer_class = posts_serializers.PostModelSerializer
 
@@ -95,6 +96,7 @@ class PostGenericViewSet(ModelViewSet):
     ),
 )
 class LikeGenericViewSet(
+    LoggingMixin,
     drf_mixins.CreateModelMixin,
     drf_mixins.DestroyModelMixin,
     GenericViewSet,

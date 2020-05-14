@@ -4,6 +4,7 @@ from allauth.account.utils import setup_user_email
 from allauth.utils import email_address_exists
 from django.conf import settings
 from django.utils.translation import gettext as _
+from drf_yasg.utils import swagger_serializer_method
 from rest_auth.models import TokenModel
 from rest_auth.serializers import LoginSerializer as RestAuthLoginSerializer
 from rest_auth.serializers import PasswordResetSerializer as BasePasswordResetSerializer
@@ -110,3 +111,23 @@ class PasswordResetSerializer(BasePasswordResetSerializer):
                 "password_reset_url": settings.DJANGO_FRONTEND_PASSWORD_RESET_URL
             }
         }
+
+
+class UserDetailSerializer(serializers.ModelSerializer):
+    last_activity = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = ("id", "email", "username", "last_login", "last_activity")
+        read_only_fields = fields
+        SWAGGER_REF_MODEL_NAME = 'UserDetailObject'
+        ref_name = SWAGGER_REF_MODEL_NAME
+
+    @staticmethod
+    @swagger_serializer_method(serializer_or_field=serializers.DateTimeField)
+    def get_last_activity(user):
+        request_log_last_request = getattr(
+            user.apirequestlog_set.last(),
+            'requested_at', '',
+        )
+        return request_log_last_request

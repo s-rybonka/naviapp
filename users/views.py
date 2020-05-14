@@ -1,11 +1,16 @@
+from django.utils.decorators import method_decorator
 from django.utils.translation import gettext as _
+from drf_yasg.utils import swagger_auto_schema
 from rest_auth.registration.views import VerifyEmailView as BaseVerifyEmailView
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-
+from rest_framework.generics import RetrieveAPIView
+from rest_framework.permissions import IsAuthenticated
+from common.utils import get_default_schema_responses
 from users import serializers as users_serializers
+from users import models as users_models
 
 
 class ResendVerificationEmailView(GenericAPIView):
@@ -27,3 +32,21 @@ class VerifyEmailView(BaseVerifyEmailView):
     https://github.com/Tivix/django-rest-auth/issues/581
     """
     http_method_names = [verb.lower() for verb in BaseVerifyEmailView.allowed_methods]
+
+
+@method_decorator(
+    name='retrieve',
+    decorator=swagger_auto_schema(
+        responses=get_default_schema_responses({
+            '200': users_serializers.UserDetailSerializer,
+        }, exclude=['400']),
+        operation_id='profile-detail',
+    )
+)
+class UserRetrieveAPIView(RetrieveAPIView):
+    serializer_class = users_serializers.UserDetailSerializer
+    queryset = users_models.User
+    permission_classes = (IsAuthenticated,)
+
+    def get_object(self):
+        return self.request.user

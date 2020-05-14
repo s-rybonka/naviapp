@@ -111,6 +111,7 @@ THIRD_PARTY_APPS = (
     'rest_auth',
     'rest_auth.registration',
     'imagekit',
+    'rest_framework_tracking',
 )
 LOCAL_APPS = (
     'users.apps.UsersAppConfig',
