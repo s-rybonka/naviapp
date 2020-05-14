@@ -67,6 +67,7 @@ class TestPostGenericViewSet:
 class TestLikeGenericViewSet:
     like_list_url = reverse('api:posts:likes-list')
     like_detail_url = 'api:posts:likes-detail'
+    like_analytic_url = reverse('api:posts:likes-analytics')
 
     def test_action_create(self, api_client, user):
         api_client.force_authenticate(user)
@@ -91,3 +92,13 @@ class TestLikeGenericViewSet:
         response = api_client.delete(reverse(self.like_detail_url, args=(like.id,)))
 
         assert response.status_code == status.HTTP_204_NO_CONTENT
+
+
+    def test_analytics_action(self, api_client, user):
+        posts_factories.LikeFactory.create_batch(10)
+
+        response = api_client.get(self.like_analytic_url)
+
+        assert response.status_code == status.HTTP_200_OK
+        assert response.data[0]['date'] is not None
+        assert response.data[0]['likes_count'] == 10
