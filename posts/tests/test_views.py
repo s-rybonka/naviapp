@@ -93,7 +93,6 @@ class TestLikeGenericViewSet:
 
         assert response.status_code == status.HTTP_204_NO_CONTENT
 
-
     def test_analytics_action(self, api_client, user):
         posts_factories.LikeFactory.create_batch(10)
 
