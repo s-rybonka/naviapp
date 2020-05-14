@@ -45,7 +45,6 @@ class TestPostGenericViewSet:
 
         payload = {
             'title': post.title,
-            'author': user.id,
             'content': post.content,
         }
 
@@ -53,7 +52,7 @@ class TestPostGenericViewSet:
 
         assert response.status_code == status.HTTP_201_CREATED
         assert payload['title'] == response.data['title']
-        assert payload['author'] == response.data['author']['id']
+        assert user.id == response.data['author']['id']
         assert payload['content'] == response.data['content']
 
     def test_delete_action(self, api_client, user):
@@ -75,14 +74,12 @@ class TestLikeGenericViewSet:
         post = posts_factories.PostFactory()
 
         payload = {
-            'added_by': user.id,
             'content_object': post.id,
         }
 
         response = api_client.post(self.like_list_url, data=payload)
 
         assert response.status_code == status.HTTP_201_CREATED
-        assert payload['added_by'] == response.data['added_by']
         assert payload['content_object'] == response.data['content_object']
 
     def test_delete_action(self, api_client, user):

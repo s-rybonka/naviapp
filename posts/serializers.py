@@ -8,7 +8,8 @@ from users.serializers import UserShortSerializer
 class PostModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = posts_models.Post
-        fields = ('id', 'title', 'file', 'content', 'created', 'modified')
+        fields = ('id', 'title', 'author', 'file', 'content', 'created', 'modified')
+        read_only_fields = ('author',)
         SWAGGER_REF_MODEL_NAME = 'PostObject'
         ref_name = SWAGGER_REF_MODEL_NAME
 
@@ -26,7 +27,8 @@ class LikeModelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = posts_models.Like
-        fields = ('id', 'content_object')
+        fields = ('id', 'added_by', 'content_object')
+        read_only_fields = ('added_by',)
         SWAGGER_REF_MODEL_NAME = 'LikeObject'
         ref_name = SWAGGER_REF_MODEL_NAME
 
