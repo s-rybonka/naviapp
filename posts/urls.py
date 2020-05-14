@@ -7,6 +7,7 @@ from posts import views as posts_views
 
 router = SimpleRouter()
 router.register('posts', posts_views.PostGenericViewSet, 'posts')
+router.register('likes', posts_views.LikeGenericViewSet, 'likes')
 
 urlpatterns = [
     path('', include(router.urls))

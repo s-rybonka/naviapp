@@ -7,7 +7,6 @@ from corsheaders.defaults import default_headers
 
 ROOT_DIR = environ.Path(__file__) - 2
 
-
 # Environment
 # https://django-environ.readthedocs.io/en/latest/#how-to-use
 # ------------------------------------------------------------------------------
@@ -301,7 +300,6 @@ REST_FRAMEWORK = {
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
     'EXCEPTION_HANDLER': 'common.exceptions.default_exception_handler',
 }
-
 # Django Debug Toolbar
 # ------------------------------------------------------------------------------
 USE_DEBUG_TOOLBAR = env.bool('DJANGO_USE_DEBUG_TOOLBAR')
