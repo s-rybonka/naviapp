@@ -40,7 +40,7 @@ env = environ.Env(
     DJANGO_CORS_ALLOW_HEADERS=(tuple, ()),
     DJANGO_CORS_ORIGIN_ALLOW_ALL=(bool, False),
     # ImageKit
-    DJANGO_IMAGEKIT_DEFAULT_FILE_STORAGE=(str, ''),
+    DJANGO_IMAGEKIT_DEFAULT_FILE_STORAGE=(str, 'django.core.files.storage.FileSystemStorage'),
     # Api docs
     API_DOC_SCHEMA_TITLE=(str, 'NaviApp Rest API'),
     API_DOC_SCHEMA_DESCRIPTION=(str, 'Based on OpenAPI 2.0 Specification'),
