@@ -40,8 +40,7 @@ class NaviBotService:
                 users_lists.append({
                     'id': data.get('user', {}).get('id'),
                     'auth_token': data.get('key'),
-                    'email': data.get('user', {}).get('email')
-
+                    'email': data.get('user', {}).get('email'),
                 })
 
         if users_lists:
@@ -123,11 +122,11 @@ class NaviBotService:
             )
 
     def write_csv(self, file_name, fieldnames, rows):
-        with open(file_name, mode='w') as file:
-            writer = csv.DictWriter(file, fieldnames=fieldnames)
-            writer.writeheader()
+        with open(file_name, mode='w') as csv_file:
+            csv_writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+            csv_writer.writeheader()
             for row in rows:
-                writer.writerow(row)
+                csv_writer.writerow(row)
 
     def read_csv(self, file_name):
         users_data = []

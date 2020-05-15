@@ -8,7 +8,7 @@ OPTIONAL_ATTRIBUTE_HELP_TEXT = 'Optional response attribute.'
 
 class BaseErrorSerializer(serializers.Serializer):
     detail = serializers.CharField(
-        label=_('detail'), required=False, help_text=MANDATORY_ATTRIBUTE_HELP_TEXT,
+        label=_('detail'), read_only=True, help_text=MANDATORY_ATTRIBUTE_HELP_TEXT,
     )
 
 
@@ -24,13 +24,13 @@ class FieldErrorSerializer(serializers.Serializer):
 
 
 class ValidationErrorSerializer(serializers.Serializer):
-    field_errors = FieldErrorSerializer(required=False, help_text='Sample keys.')
+    field_errors = FieldErrorSerializer(read_only=True, help_text='Sample keys.')
     non_field_errors = serializers.ListField(
-        serializers.CharField(label=_('non field errors')), required=False,
+        serializers.CharField(label=_('non field errors')), read_only=True,
         help_text=OPTIONAL_ATTRIBUTE_HELP_TEXT,
     )
     detail = serializers.CharField(
-        label=_('detail'), required=False, help_text=OPTIONAL_ATTRIBUTE_HELP_TEXT,
+        label=_('detail'), read_only=True, help_text=OPTIONAL_ATTRIBUTE_HELP_TEXT,
     )
 
 
@@ -51,7 +51,7 @@ class MethodNotAllowedErrorSerializer(BaseErrorSerializer):
 
 
 class OperationSerializer(serializers.Serializer):
-    detail = serializers.CharField(label=_('detail'), required=False)
+    detail = serializers.CharField(label=_('detail'), read_only=True)
 
 
 class PaginatedListSerializer(serializers.Serializer):
