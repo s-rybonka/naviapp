@@ -25,9 +25,15 @@ $ mkdir docker/db/ && cp envs.example/db.env docker/db/.env
 $ docker-compose up
 $ docker-compose start
 ```
+### Run migrations
+```bash
+$ docker-compose run --rm app ./manage.py migrate
+```
 ### Start Bot
 ```bash
-$ docker-compose run --rm app python bot.py
+$ docker-compose run --rm app python bot.py <or>
+$ docker-compose exec app sh 
+$ python bot.py
 ```
 ### Start tests
 ```bash

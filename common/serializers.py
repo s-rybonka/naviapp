@@ -26,7 +26,7 @@ class FieldErrorSerializer(serializers.Serializer):
 class ValidationErrorSerializer(serializers.Serializer):
     field_errors = FieldErrorSerializer(read_only=True, help_text='Sample keys.')
     non_field_errors = serializers.ListField(
-        serializers.CharField(label=_('non field errors')), read_only=True,
+        serializers.CharField(label=_('non field errors')),
         help_text=OPTIONAL_ATTRIBUTE_HELP_TEXT,
     )
     detail = serializers.CharField(
